@@ -20,13 +20,15 @@ public class PlayerController : MonoBehaviour {
     private bool grounded = false;
     private Animator anim;
 	private int playerMoney;
-    
+    private bool moving = false;
+
+
 
     void Awake()
 	{
         rb2d = GetComponent<Rigidbody2D> ();
         anim = GetComponent<Animator> ();
-		playerMoney = 0;
+        playerMoney = 0;
         playerHealth = 100;
         MoneyCounter();
         HealthCounter();
@@ -42,9 +44,11 @@ public class PlayerController : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-        HanldeAttacks();
+        float h = Input.GetAxis("Horizontal");
+        HandleAnimations();
         HandleMovement();
         ResetValues();
+        anim.SetFloat("Speed", Mathf.Abs(h));
     }
 
     void HandleDeath()
@@ -67,14 +71,22 @@ public class PlayerController : MonoBehaviour {
             if (h * rb2d.velocity.x < maxSpeed)
             {
                 rb2d.AddForce(Vector2.right * h * moveForce);
+                moving = true;
+                
             }
             if (Mathf.Abs(rb2d.velocity.x) > maxSpeed)
             {
                 rb2d.velocity = new Vector2(Mathf.Sign(rb2d.velocity.x) * maxSpeed, rb2d.velocity.y);
+                moving = true;
             }
-            if(!Input.anyKey && grounded)
+            if (h > 0 && !facingRight)
+                Flip();
+            else if (h < 0 && facingRight)
+                Flip();
+            if (!Input.anyKey && grounded)
             {
                 rb2d.velocity = Vector2.zero;
+                moving = false;
             }
             if (jump)
             {
@@ -83,17 +95,6 @@ public class PlayerController : MonoBehaviour {
             }
             
         }
-
-        //Inverte o sprite de acordo com o sentido do movimento
-        if (h > 0 && !facingRight)
-        {
-            Flip();
-        }
-        else if (h < 0 && facingRight)
-        {
-            Flip();
-        }
-
     }
 
     void HandleInput()
@@ -119,12 +120,20 @@ public class PlayerController : MonoBehaviour {
             transform.localScale = playerScale;
     }
 
-    private void HanldeAttacks()
+    private void HandleAnimations()
     {
         if (attack && !this.anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
         {
             anim.SetTrigger("Attack");
             rb2d.velocity = Vector2.zero;
+        }
+        if (moving && !jump)
+        {
+            anim.SetBool("Run",true);
+}
+        if (!moving)
+        {
+            anim.SetBool("Run",false);
         }
     }
 

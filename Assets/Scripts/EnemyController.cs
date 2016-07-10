@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class EnemyController : MonoBehaviour {
-
+    /*
     public LayerMask enemyMask;
     public float speed;
     Rigidbody2D rb2d;
@@ -18,5 +18,5 @@ public class EnemyController : MonoBehaviour {
 	void Update () {
         Vector2 vec2 = rb2d.velocity;
         vec2.x = speed;
-	}
+	}*/
 }

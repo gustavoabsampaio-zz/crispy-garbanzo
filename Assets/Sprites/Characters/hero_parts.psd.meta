@@ -1,9 +1,11 @@
 fileFormatVersion: 2
 guid: d5caca23fe2ab704cb1dfe9e5476780a
-timeCreated: 1467208414
+timeCreated: 1467813557
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: hero_parts_0
+    21300002: hero_parts_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -26,11 +28,11 @@ TextureImporter:
   cubemapConvolutionSteps: 7
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: -3
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -38,7 +40,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -49,7 +51,67 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: hero_parts_0
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 886
+        width: 786
+        height: 350
+      alignment: 9
+      pivot: {x: 0.055837266, y: 0.8791352}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 154.39731, y: -44.30896}
+        - {x: 28.397308, y: 21.69104}
+        - {x: -22.602692, y: 21.69104}
+        - {x: -22.602692, y: -40.30896}
+        - {x: 51.39731, y: -156.30896}
+        - {x: 55.39731, y: -157.30896}
+        - {x: 229.39731, y: -157.30896}
+        - {x: 337.3973, y: -144.30896}
+        - {x: 380.3973, y: -102.30896}
+        - {x: 380.3973, y: -82.30896}
+        - {x: 312.3973, y: -54.30896}
+      - - {x: 324.3973, y: -60.30896}
+        - {x: 325.3973, y: -63.30896}
+        - {x: 330.3973, y: -65.30896}
+        - {x: 333.3973, y: -64.30896}
+        - {x: 333.3973, y: -61.30896}
+        - {x: 331.3973, y: -59.30896}
+        - {x: 326.3973, y: -58.30896}
+    - name: hero_parts_1
+      rect:
+        serializedVersion: 2
+        x: 1658
+        y: 1289
+        width: 569
+        height: 466
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 147.39606, y: -7.0319824}
+        - {x: 133.39606, y: 57.968018}
+        - {x: 126.39606, y: 75.96802}
+        - {x: 109.39606, y: 98.96802}
+        - {x: 84.39606, y: 120.96802}
+        - {x: 58.396057, y: 120.96802}
+        - {x: 55.396057, y: 119.96802}
+        - {x: -36.603943, y: 80.96802}
+        - {x: -93.60394, y: 53.968018}
+        - {x: -117.60394, y: 26.968018}
+        - {x: -138.60394, y: -13.031982}
+        - {x: -145.60394, y: -48.031982}
+        - {x: -145.60394, y: -64.03198}
+        - {x: -106.60394, y: -90.03198}
+        - {x: -88.60394, y: -99.03198}
+        - {x: -43.603943, y: -115.03198}
+        - {x: -27.603943, y: -117.03198}
+        - {x: -11.603943, y: -117.03198}
+        - {x: 85.39606, y: -70.03198}
+        - {x: 147.39606, y: -38.031982}
     outline: []
   spritePackingTag: 
   userData: 
