@@ -1,35 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : Character
+{
 
-    [HideInInspector] public bool facingRight = true;
     [HideInInspector] public bool jump = false;
     
-    public float moveForce = 365f;
-    public float maxSpeed = 5f;
     public float jumpForce = 1000f;
     public Transform groundCheck;
 	public Text healthText;
     public Text moneyText;
-    public float playerHealth;
+    public float health;
 
-    private bool attack = false;
-	private Rigidbody2D rb2d;
     private bool grounded = false;
-    private Animator anim;
 	private int playerMoney;
-    private bool moving = false;
 
 
 
-    void Awake()
+    public override void Start()
 	{
-        rb2d = GetComponent<Rigidbody2D> ();
-        anim = GetComponent<Animator> ();
+        base.Start();
         playerMoney = 0;
-        playerHealth = 100;
+        health = 100;
         MoneyCounter();
         HealthCounter();
     }
@@ -49,15 +43,17 @@ public class PlayerController : MonoBehaviour {
         HandleMovement();
         ResetValues();
         anim.SetFloat("Speed", Mathf.Abs(h));
+
     }
 
     void HandleDeath()
     {
-        if (playerHealth <= 0)
+        if (health <= 0)
         {
             if (gameObject.CompareTag("Player"))
             {
                 gameObject.SetActive(false);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
     }
@@ -71,23 +67,28 @@ public class PlayerController : MonoBehaviour {
             if (h * rb2d.velocity.x < maxSpeed)
             {
                 rb2d.AddForce(Vector2.right * h * moveForce);
-                moving = true;
-                
             }
             if (Mathf.Abs(rb2d.velocity.x) > maxSpeed)
             {
                 rb2d.velocity = new Vector2(Mathf.Sign(rb2d.velocity.x) * maxSpeed, rb2d.velocity.y);
-                moving = true;
             }
             if (h > 0 && !facingRight)
-                Flip();
+                ChangeDirection();
             else if (h < 0 && facingRight)
-                Flip();
-            if (!Input.anyKey && grounded)
+                ChangeDirection();
+            if (h==0 && grounded || attack)
             {
                 rb2d.velocity = Vector2.zero;
+            }
+            if (h==0)
+            {
                 moving = false;
             }
+            else
+            {
+                moving = true;
+            }
+            
             if (jump)
             {
                 rb2d.AddForce(new Vector2(0f, jumpForce));
@@ -112,20 +113,11 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    void Flip()
-    {
-            facingRight = !facingRight;
-            Vector3 playerScale = transform.localScale;
-            playerScale.x *= -1;
-            transform.localScale = playerScale;
-    }
-
     private void HandleAnimations()
     {
         if (attack && !this.anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
         {
-            anim.SetTrigger("Attack");
-            rb2d.velocity = Vector2.zero;
+            Attack();
         }
         if (moving && !jump)
         {
@@ -145,9 +137,14 @@ public class PlayerController : MonoBehaviour {
 			playerMoney += 1;
             MoneyCounter();
         }
-        if (other.gameObject.CompareTag("DamageDealer"))
+        if (other.gameObject.CompareTag("DamageFire"))
         {
-            playerHealth -= Random.Range(14,23);
+            health -= Random.Range(14,23);
+            HealthCounter();
+        }
+        if (other.gameObject.CompareTag("DamageGolem"))
+        {
+            health -= Random.Range(14, 23);
             HealthCounter();
         }
     }
@@ -159,7 +156,7 @@ public class PlayerController : MonoBehaviour {
 
     void HealthCounter ()
     {
-        healthText.text = playerHealth.ToString() + "HP";
+        healthText.text = health.ToString() + "HP";
     }
 
     private void ResetValues ()

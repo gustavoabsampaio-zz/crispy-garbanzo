@@ -14,9 +14,11 @@ public class CollisionTrigger : MonoBehaviour {
         playerCollider = GameObject.Find("Player").GetComponent<BoxCollider2D>();
         Physics2D.IgnoreCollision(platformCollider, platformTrigger, true);
     }
-
+    // ver velocidade vertical do player e a partir daí desativar ou ativar o collider da plataforma
+    //só um colider pra plataforma e se o player estiver na plataforma, desativar o collider se apertar pra baixo 
     void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("ON ENTER");
         if (other.gameObject.name == "Player")
         {
             Physics2D.IgnoreCollision(platformCollider, playerCollider, true);
@@ -25,6 +27,7 @@ public class CollisionTrigger : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D other)
     {
+        Debug.Log("ON KELAVE");
         if (other.gameObject.name == "Player")
         {
             Physics2D.IgnoreCollision(platformCollider, playerCollider, false);
